@@ -10,7 +10,7 @@ const project = {
 };
 
 test("each <span> element has a unique key prop", () => {
-  let errorSpy = jest.spyOn(global.console, "error");
+  const errorSpy = jest.spyOn(global.console, "error");
   render(
     <ProjectItem
       name={project.name}
@@ -20,7 +20,6 @@ test("each <span> element has a unique key prop", () => {
   );
 
   expect(errorSpy).not.toHaveBeenCalled();
-
   errorSpy.mockRestore();
 });
 
@@ -32,9 +31,10 @@ test("renders a <span> for each technology passed in as a prop", () => {
       technologies={project.technologies}
     />
   );
-  for (const technology of project.technologies) {
+
+  project.technologies.forEach((technology) => {
     const span = screen.queryByText(technology);
     expect(span).toBeInTheDocument();
     expect(span.tagName).toBe("SPAN");
-  }
+  });
 });
